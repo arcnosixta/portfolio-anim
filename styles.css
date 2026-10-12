@@ -396,7 +396,7 @@ html[data-theme="light"] .icon-btn__moon { display: none; }
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #05070d;
   border: 1px solid transparent;
-  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent);
+  animation: pulse-glow 3s ease-in-out infinite;
 }
 .btn--primary:hover { filter: brightness(1.1); box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 55%, transparent); }
 .btn--primary::after {
@@ -425,8 +425,9 @@ html[data-theme="light"] .icon-btn__moon { display: none; }
   font-family: var(--mono);
   font-size: 12.5px;
   box-shadow: var(--shadow), 0 0 40px color-mix(in srgb, var(--accent) 12%, transparent);
-  animation: rise .8s cubic-bezier(.2, .7, .2, 1) .15s both;
+  animation: rise .8s cubic-bezier(.2, .7, .2, 1) .15s both, float 7s ease-in-out 1.2s infinite;
 }
+.term:hover { animation-play-state: paused; }
 .term__bar {
   display: flex;
   align-items: center;
@@ -525,6 +526,8 @@ html[data-theme="light"] .icon-btn__moon { display: none; }
 }
 .about__text p { margin: 0 0 16px; color: var(--ink-2); font-size: 16px; }
 .about__text p:first-child::before { content: "▍"; color: var(--accent); margin-right: 8px; }
+.about.is-in .about__text p { animation: rise .6s cubic-bezier(.2, .7, .2, 1) both; }
+.about.is-in .about__text p:nth-child(2) { animation-delay: .14s; }
 
 .stats {
   display: grid;
@@ -777,6 +780,14 @@ html[data-theme="light"] .icon-btn__moon { display: none; }
   90% { clip-path: inset(70% 0 5% 0); transform: translate(3px, -2px); }
   93% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 2px); }
   97% { clip-path: inset(45% 0 20% 0); transform: translate(2px, -1px); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 30%, transparent); }
+  50% { box-shadow: 0 0 34px color-mix(in srgb, var(--accent) 55%, transparent); }
 }
 
 /* Hero entrance */

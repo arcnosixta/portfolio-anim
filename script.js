@@ -369,10 +369,37 @@
       }
     }
 
-    function frame() {
+    var streaks = [];
+    var last = 0;
+    function frame(ts) {
       if (!running) return;
+      requestAnimationFrame(frame);
       ctx.clearRect(0, 0, w, h);
       var i, j, p, q, dx, dy, dist;
+
+      if (ts - last > 2600 && streaks.length < 2) {
+        last = ts;
+        var sx = Math.random() * w;
+        var ang = Math.PI / 2 + (Math.random() * 0.9 - 0.45);
+        var sp = (5 + Math.random() * 3) * w / 900;
+        streaks.push({ x: sx, y: 0, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, life: 1 });
+      }
+      for (i = streaks.length - 1; i >= 0; i--) {
+        var s = streaks[i];
+        s.x += s.vx; s.y += s.vy;
+        s.life -= 0.012;
+        if (s.life <= 0) { streaks.splice(i, 1); continue; }
+        var grad = ctx.createLinearGradient(s.x - s.vx * 6, s.y - s.vy * 6, s.x, s.y);
+        grad.addColorStop(0, "rgba(" + rgb + ",0)");
+        grad.addColorStop(1, "rgba(" + rgb + "," + (0.5 * s.life).toFixed(3) + ")");
+        ctx.beginPath();
+        ctx.moveTo(s.x - s.vx * 6, s.y - s.vy * 6);
+        ctx.lineTo(s.x, s.y);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+      }
+
       for (i = 0; i < pts.length; i++) {
         p = pts[i];
         p.x += p.vx; p.y += p.vy;
@@ -396,7 +423,6 @@
           }
         }
       }
-      requestAnimationFrame(frame);
     }
 
     function start() {
@@ -425,6 +451,33 @@
     });
     start();
   })();
+
+  /* ---------- Scramble on card titles ---------- */
+  var SCRAMBLE = "!<>-_\\/[]{}—=+*^?#";
+  function scramble(el) {
+    if (reduce) return;
+    var orig = el.getAttribute("data-src") || el.textContent;
+    el.setAttribute("data-src", orig);
+    var frame = 0, total = 16;
+    (function tick() {
+      frame++;
+      var out = "";
+      for (var i = 0; i < orig.length; i++) {
+        var ch = orig[i];
+        if (ch === " ") { out += " "; continue; }
+        if (frame > total * (i / orig.length + 0.4)) out += ch;
+        else out += SCRAMBLE[Math.floor(Math.random() * SCRAMBLE.length)];
+      }
+      el.textContent = out;
+      if (frame < total) requestAnimationFrame(tick);
+      else el.textContent = orig;
+    })();
+  }
+  if (fine && !reduce) {
+    Array.prototype.forEach.call(document.querySelectorAll(".card__title"), function (el) {
+      el.addEventListener("pointerenter", function () { scramble(el); });
+    });
+  }
 
   /* ---------- Year ---------- */
   var year = document.getElementById("year");

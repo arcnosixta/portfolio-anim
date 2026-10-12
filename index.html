@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Портфолио — Имя Фамилия</title>
+  <meta name="description" content="Портфолио: обо мне, навыки, проекты и контакты.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Перейти к содержимому</a>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <header class="topbar" id="topbar">
+    <div class="wrap topbar__inner">
+      <a class="brand" href="#top">Имя&nbsp;Фамилия</a>
+      <nav class="nav" id="nav" aria-label="Основная навигация">
+        <a href="#about" data-spy="about">Обо мне</a>
+        <a href="#skills" data-spy="skills">Навыки</a>
+        <a href="#projects" data-spy="projects">Проекты</a>
+        <a href="#contact" data-spy="contact">Контакты</a>
+      </nav>
+      <div class="topbar__actions">
+        <button class="icon-btn" id="theme" type="button" aria-label="Переключить тему">
+          <span class="icon-btn__sun" aria-hidden="true">☀</span>
+          <span class="icon-btn__moon" aria-hidden="true">☾</span>
+        </button>
+        <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Меню">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <canvas class="hero__canvas" id="fx" aria-hidden="true"></canvas>
+      <div class="wrap hero__inner" id="heroInner">
+        <p class="hero__eyebrow">Портфолио</p>
+        <h1 class="hero__title">Привет, я <span class="grad">Имя Фамилия</span>.<br>Делаю веб-продукты.</h1>
+        <p class="hero__lead">Короткое описание: чем занимаюсь, какие задачи решаю и что мне интересно. Замените этот текст на своё.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary magnetic" href="#projects">Смотреть проекты</a>
+          <a class="btn magnetic" href="#contact">Связаться</a>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#about" aria-label="Прокрутить вниз">
+        <span class="scroll-cue__dot"></span>
+      </a>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <h2 class="section__title">Обо мне</h2>
+        <div class="about">
+          <div class="about__text">
+            <p>Пара абзацев о себе: опыт, подход к работе, что цените. Это заглушка — замените на реальный текст.</p>
+            <p>Второй абзац: чем занимаетесь сейчас, какие направления развиваете.</p>
+          </div>
+          <dl class="stats">
+            <div><dt>5+</dt><dd>лет опыта</dd></div>
+            <div><dt>20</dt><dd>проектов</dd></div>
+            <div><dt>3</dt><dd>направления</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="skills">
+      <div class="wrap">
+        <h2 class="section__title">Навыки</h2>
+        <ul class="chips">
+          <li>HTML</li><li>CSS</li><li>JavaScript</li><li>TypeScript</li>
+          <li>React</li><li>Node.js</li><li>Git</li><li>Figma</li>
+        </ul>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>TypeScript</span>
+          <span>React</span><span>Node.js</span><span>Git</span><span>Figma</span>
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>TypeScript</span>
+          <span>React</span><span>Node.js</span><span>Git</span><span>Figma</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="wrap">
+        <h2 class="section__title">Проекты</h2>
+        <div class="grid">
+          <article class="card tilt" data-tilt>
+            <h3 class="card__title">Проект №1</h3>
+            <p class="card__text">Краткое описание проекта: задача, роль и результат. Заглушка.</p>
+            <p class="card__tags"><span>Web</span><span>React</span></p>
+            <a class="card__link" href="#">Открыть →</a>
+          </article>
+          <article class="card tilt" data-tilt>
+            <h3 class="card__title">Проект №2</h3>
+            <p class="card__text">Краткое описание проекта: задача, роль и результат. Заглушка.</p>
+            <p class="card__tags"><span>Backend</span><span>Node.js</span></p>
+            <a class="card__link" href="#">Открыть →</a>
+          </article>
+          <article class="card tilt" data-tilt>
+            <h3 class="card__title">Проект №3</h3>
+            <p class="card__text">Краткое описание проекта: задача, роль и результат. Заглушка.</p>
+            <p class="card__tags"><span>UI/UX</span><span>Figma</span></p>
+            <a class="card__link" href="#">Открыть →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="contact">
+      <div class="wrap">
+        <h2 class="section__title">Контакты</h2>
+        <p class="contact__lead">Открыт к предложениям и сотрудничеству.</p>
+        <ul class="contact__list">
+          <li><span>Email</span><a href="mailto:you@example.com">you@example.com</a></li>
+          <li><span>Telegram</span><a href="https://t.me/username">@username</a></li>
+          <li><span>GitHub</span><a href="https://github.com/username">github.com/username</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p>© <span id="year">2026</span> Имя Фамилия</p>
+      <p>Сделано на чистом HTML, CSS и JS.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" type="button" aria-label="Наверх">↑</button>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

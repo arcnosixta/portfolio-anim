@@ -1,30 +1,41 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Портфолио — Имя Фамилия</title>
   <meta name="description" content="Портфолио: обо мне, навыки, проекты и контакты.">
-  <meta name="theme-color" content="#ffffff">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
+  <meta name="theme-color" content="#05070d">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2305070d'/><text x='50' y='68' text-anchor='middle' font-family='monospace' font-size='58' font-weight='bold' fill='%2322d3ee'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a class="skip" href="#main">Перейти к содержимому</a>
 
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="orb orb--1" aria-hidden="true"></div>
+  <div class="orb orb--2" aria-hidden="true"></div>
+  <div class="orb orb--3" aria-hidden="true"></div>
+
   <div class="progress" id="progress" aria-hidden="true"></div>
   <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
-  <header class="topbar" id="topbar">
+  <header class="topbar glass" id="topbar">
     <div class="wrap topbar__inner">
-      <a class="brand" href="#top">Имя&nbsp;Фамилия</a>
+      <a class="brand" href="#top">ARC<span>/</span>PORTFOLIO</a>
       <nav class="nav" id="nav" aria-label="Основная навигация">
-        <a href="#about" data-spy="about">Обо мне</a>
-        <a href="#skills" data-spy="skills">Навыки</a>
-        <a href="#projects" data-spy="projects">Проекты</a>
-        <a href="#contact" data-spy="contact">Контакты</a>
+        <a href="#about" data-spy="about"><b>01</b> Обо мне</a>
+        <a href="#skills" data-spy="skills"><b>02</b> Навыки</a>
+        <a href="#projects" data-spy="projects"><b>03</b> Проекты</a>
+        <a href="#contact" data-spy="contact"><b>04</b> Контакты</a>
       </nav>
       <div class="topbar__actions">
+        <span class="pill" title="Доступен для проектов"><i></i>Доступен</span>
         <button class="icon-btn" id="theme" type="button" aria-label="Переключить тему">
           <span class="icon-btn__sun" aria-hidden="true">☀</span>
           <span class="icon-btn__moon" aria-hidden="true">☾</span>
@@ -40,12 +51,27 @@
     <section class="hero" id="top">
       <canvas class="hero__canvas" id="fx" aria-hidden="true"></canvas>
       <div class="wrap hero__inner" id="heroInner">
-        <p class="hero__eyebrow">Портфолио</p>
-        <h1 class="hero__title">Привет, я <span class="grad">Имя Фамилия</span>.<br>Делаю веб-продукты.</h1>
-        <p class="hero__lead">Короткое описание: чем занимаюсь, какие задачи решаю и что мне интересно. Замените этот текст на своё.</p>
-        <div class="hero__actions">
-          <a class="btn btn--primary magnetic" href="#projects">Смотреть проекты</a>
-          <a class="btn magnetic" href="#contact">Связаться</a>
+        <div class="hero__copy">
+          <p class="hero__eyebrow">// система онлайн · человек — <span id="typed">подключение…</span></p>
+          <h1 class="hero__title">Привет, я<br><span class="glitch" data-text="Имя Фамилия">Имя Фамилия</span>.<br>Делаю веб-продукты.</h1>
+          <p class="hero__lead">Короткое описание: чем занимаюсь, какие задачи решаю и что мне интересно. Замените этот текст на своё.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary magnetic" href="#projects">Запустить проекты ↗</a>
+            <a class="btn magnetic" href="#contact">Связаться</a>
+          </div>
+          <div class="hero__meta">
+            <span>stack: web / backend / cloud</span>
+            <span>status: <em>seed_done • build_ok • deploy_ready</em></span>
+          </div>
+        </div>
+        <div class="term glass" aria-hidden="true">
+          <div class="term__bar">
+            <span class="term__dot term__dot--r"></span>
+            <span class="term__dot term__dot--y"></span>
+            <span class="term__dot term__dot--g"></span>
+            <b>arc@portfolio — zsh</b>
+          </div>
+          <div class="term__body" id="termBody"></div>
         </div>
       </div>
       <a class="scroll-cue" href="#about" aria-label="Прокрутить вниз">
@@ -55,16 +81,16 @@
 
     <section class="section" id="about">
       <div class="wrap">
-        <h2 class="section__title">Обо мне</h2>
+        <h2 class="section__title"><span class="section__num">01</span>Обо мне</h2>
         <div class="about">
           <div class="about__text">
             <p>Пара абзацев о себе: опыт, подход к работе, что цените. Это заглушка — замените на реальный текст.</p>
             <p>Второй абзац: чем занимаетесь сейчас, какие направления развиваете.</p>
           </div>
           <dl class="stats">
-            <div><dt>5+</dt><dd>лет опыта</dd></div>
-            <div><dt>20</dt><dd>проектов</dd></div>
-            <div><dt>3</dt><dd>направления</dd></div>
+            <div class="glass"><dt>5+</dt><dd>лет опыта</dd></div>
+            <div class="glass"><dt>20</dt><dd>проектов</dd></div>
+            <div class="glass"><dt>3</dt><dd>направления</dd></div>
           </dl>
         </div>
       </div>
@@ -72,7 +98,7 @@
 
     <section class="section section--alt" id="skills">
       <div class="wrap">
-        <h2 class="section__title">Навыки</h2>
+        <h2 class="section__title"><span class="section__num">02</span>Навыки</h2>
         <ul class="chips">
           <li>HTML</li><li>CSS</li><li>JavaScript</li><li>TypeScript</li>
           <li>React</li><li>Node.js</li><li>Git</li><li>Figma</li>
@@ -90,25 +116,28 @@
 
     <section class="section" id="projects">
       <div class="wrap">
-        <h2 class="section__title">Проекты</h2>
+        <h2 class="section__title"><span class="section__num">03</span>Проекты</h2>
         <div class="grid">
-          <article class="card tilt" data-tilt>
+          <article class="card glass tilt" data-tilt>
+            <p class="card__tag">АС-01</p>
             <h3 class="card__title">Проект №1</h3>
             <p class="card__text">Краткое описание проекта: задача, роль и результат. Заглушка.</p>
             <p class="card__tags"><span>Web</span><span>React</span></p>
-            <a class="card__link" href="#">Открыть →</a>
+            <a class="card__link" href="#">Открыть ↗</a>
           </article>
-          <article class="card tilt" data-tilt>
+          <article class="card glass tilt" data-tilt>
+            <p class="card__tag">АС-02</p>
             <h3 class="card__title">Проект №2</h3>
             <p class="card__text">Краткое описание проекта: задача, роль и результат. Заглушка.</p>
             <p class="card__tags"><span>Backend</span><span>Node.js</span></p>
-            <a class="card__link" href="#">Открыть →</a>
+            <a class="card__link" href="#">Открыть ↗</a>
           </article>
-          <article class="card tilt" data-tilt>
+          <article class="card glass tilt" data-tilt>
+            <p class="card__tag">АС-03</p>
             <h3 class="card__title">Проект №3</h3>
             <p class="card__text">Краткое описание проекта: задача, роль и результат. Заглушка.</p>
             <p class="card__tags"><span>UI/UX</span><span>Figma</span></p>
-            <a class="card__link" href="#">Открыть →</a>
+            <a class="card__link" href="#">Открыть ↗</a>
           </article>
         </div>
       </div>
@@ -116,12 +145,12 @@
 
     <section class="section section--alt" id="contact">
       <div class="wrap">
-        <h2 class="section__title">Контакты</h2>
+        <h2 class="section__title"><span class="section__num">04</span>Контакты</h2>
         <p class="contact__lead">Открыт к предложениям и сотрудничеству.</p>
         <ul class="contact__list">
-          <li><span>Email</span><a href="mailto:you@example.com">you@example.com</a></li>
-          <li><span>Telegram</span><a href="https://t.me/username">@username</a></li>
-          <li><span>GitHub</span><a href="https://github.com/username">github.com/username</a></li>
+          <li class="glass"><span>Email</span><a href="mailto:you@example.com">you@example.com</a></li>
+          <li class="glass"><span>Telegram</span><a href="https://t.me/username">@username</a></li>
+          <li class="glass"><span>GitHub</span><a href="https://github.com/username">github.com/username</a></li>
         </ul>
       </div>
     </section>
@@ -130,7 +159,7 @@
   <footer class="footer">
     <div class="wrap footer__inner">
       <p>© <span id="year">2026</span> Имя Фамилия</p>
-      <p>Сделано на чистом HTML, CSS и JS.</p>
+      <p>ARC/PORTFOLIO · сделано на чистом HTML, CSS и JS</p>
     </div>
   </footer>
 

@@ -204,21 +204,124 @@
     });
   });
 
-  /* ---------- Cursor glow ---------- */
+  /* ---------- Cursor glow + ring ---------- */
   var glow = document.getElementById("cursorGlow");
+  var ring = document.getElementById("cursorRing");
   if (glow && fine && !reduce) {
-    var gx = window.innerWidth / 2, gy = window.innerHeight / 2, cx = gx, cy = gy;
+    var gx = window.innerWidth / 2, gy = window.innerHeight / 2;
+    var cx = gx, cy = gy, rx = gx, ry = gy;
     window.addEventListener("pointermove", function (e) {
       gx = e.clientX; gy = e.clientY;
       glow.classList.add("is-on");
+      if (ring) ring.classList.add("is-on");
     }, { passive: true });
-    document.addEventListener("pointerleave", function () { glow.classList.remove("is-on"); });
+    document.addEventListener("pointerleave", function () {
+      glow.classList.remove("is-on");
+      if (ring) ring.classList.remove("is-on");
+    });
+    window.addEventListener("pointerdown", function () { if (ring) ring.classList.add("is-press"); }, { passive: true });
+    ["pointerup", "pointerleave"].forEach(function (ev) {
+      window.addEventListener(ev, function () { if (ring) ring.classList.remove("is-press"); }, { passive: true });
+    });
     (function loop() {
-      cx += (gx - cx) * 0.12;
-      cy += (gy - cy) * 0.12;
+      cx += (gx - cx) * 0.1;
+      cy += (gy - cy) * 0.1;
+      rx += (gx - rx) * 0.32;
+      ry += (gy - ry) * 0.32;
       glow.style.transform = "translate(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px)";
+      if (ring) ring.style.transform = "translate(" + rx.toFixed(1) + "px," + ry.toFixed(1) + "px)";
       requestAnimationFrame(loop);
     })();
+  }
+
+  /* ---------- Terminal typewriter ---------- */
+  var termBody = document.getElementById("termBody");
+  var typedEl = document.getElementById("typed");
+  var TERM_LINES = [
+    ["$", "whoami", ""],
+    ["", "имя-фамилия @ fullstack-developer", "hl"],
+    ["$", "cat skills.txt", ""],
+    ["", "web systems · backend · ui/ux", "c"],
+    ["$", "systemctl status career", ""],
+    ["", "● active — available for work", "ok"],
+    ["$", "deploy --target you", ""],
+    ["", "connecting… success ✓", "ok"]
+  ];
+
+  function typeText(el, text, idx, done) {
+    if (idx > text.length) { done(); return; }
+    el.textContent = text.slice(0, idx);
+    setTimeout(function () { typeText(el, text, idx + 1, done); }, 24);
+  }
+
+  function runTerminal() {
+    if (!termBody) return;
+    var i = 0;
+    function nextLine() {
+      if (i >= TERM_LINES.length) return;
+      var L = TERM_LINES[i++];
+      var p = document.createElement("p");
+      p.className = "term__line";
+      var cmd = L[0] ? '<span class="p">➜</span> ' : "";
+      p.innerHTML = cmd;
+      var textNode = document.createElement("span");
+      if (L[2]) textNode.className = L[2];
+      var caret = document.createElement("span");
+      caret.className = "term__cursor";
+      p.appendChild(textNode);
+      p.appendChild(caret);
+      termBody.appendChild(p);
+      typeText(textNode, L[1], 0, function () {
+        caret.remove();
+        setTimeout(nextLine, L[0] ? 340 : 180);
+      });
+    }
+    nextLine();
+  }
+
+  function printTerminalInstantly() {
+    if (!termBody) return;
+    TERM_LINES.forEach(function (L) {
+      var p = document.createElement("p");
+      p.className = "term__line";
+      var cmd = L[0] ? '<span class="p">➜</span> ' : "";
+      var cls = L[2] ? ' class="' + L[2] + '"' : "";
+      p.innerHTML = cmd + '<span' + cls + '>' + L[1] + "</span>";
+      termBody.appendChild(p);
+    });
+  }
+
+  if (reduce) { printTerminalInstantly(); } else { runTerminal(); }
+
+  if (typedEl) {
+    var phrases = ["инициализация…", "загрузка модулей…", "система онлайн ✓"];
+    if (reduce) {
+      typedEl.textContent = "система онлайн ✓";
+    } else {
+      var pi = 0, pc = 0, deleting = false;
+      (function typeLoop() {
+        var phrase = phrases[pi];
+        typedEl.textContent = phrase.slice(0, pc);
+        if (!deleting) {
+          if (pc >= phrase.length) {
+            deleting = true;
+            setTimeout(typeLoop, 1600);
+            return;
+          }
+          pc++;
+          setTimeout(typeLoop, 36);
+        } else {
+          if (pc <= 0) {
+            deleting = false;
+            pi = (pi + 1) % phrases.length;
+            setTimeout(typeLoop, 300);
+            return;
+          }
+          pc--;
+          setTimeout(typeLoop, 16);
+        }
+      })();
+    }
   }
 
   /* ---------- Hero particle constellation ---------- */

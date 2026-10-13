@@ -5,25 +5,17 @@
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
 
-  /* ---------- Theme ---------- */
-  var saved = null;
-  try { saved = localStorage.getItem("portfolio-theme"); } catch (e) {}
-  if (saved === "light" || saved === "dark") {
-    root.setAttribute("data-theme", saved);
-  } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    root.setAttribute("data-theme", "dark");
-  }
+  root.setAttribute("data-theme", "dark");
+  var metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme) metaTheme.setAttribute("content", "#050505");
 
-  var themeBtn = document.getElementById("theme");
-  if (themeBtn) {
-    themeBtn.addEventListener("click", function () {
-      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      root.setAttribute("data-theme", next);
-      try { localStorage.setItem("portfolio-theme", next); } catch (e) {}
-      var meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute("content", next === "dark" ? "#0e1116" : "#ffffff");
-      if (fx.onTheme) fx.onTheme();
-    });
+  /* ---------- Loading overlay ---------- */
+  var loading = document.getElementById("loading");
+  if (loading) {
+    if (reduce) { loading.classList.add("done"); }
+    else {
+      setTimeout(function () { loading.classList.add("done"); }, 1350);
+    }
   }
 
   /* ---------- Mobile menu ---------- */
@@ -90,15 +82,15 @@
         }
       });
     }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
-    ["about", "skills", "projects", "contact"].forEach(function (id) {
+    ["profile", "skills", "works", "contact"].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) spy.observe(el);
     });
   }
 
   /* ---------- Scroll reveal ---------- */
-  var revealTargets = document.querySelectorAll(".section, .card, .chips, .stats");
-  Array.prototype.forEach.call(document.querySelectorAll(".card"), function (el, i) {
+  var revealTargets = document.querySelectorAll(".section, .work, .chips, .stats");
+  Array.prototype.forEach.call(document.querySelectorAll(".work"), function (el, i) {
     el.style.setProperty("--i", i);
   });
   Array.prototype.forEach.call(document.querySelectorAll(".chips li"), function (el, i) {
@@ -167,9 +159,9 @@
         var y = (e.clientY - r.top) / r.height;
         card.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
         card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
-        var rx = (0.5 - y) * 10;
-        var ry = (x - 0.5) * 12;
-        card.style.transform = "perspective(700px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) translateY(-4px)";
+        var rx = (0.5 - y) * 7;
+        var ry = (x - 0.5) * 8;
+        card.style.transform = "perspective(900px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) translateY(-5px)";
       });
       card.addEventListener("pointerleave", function () {
         card.style.transform = "";
@@ -474,7 +466,7 @@
     })();
   }
   if (fine && !reduce) {
-    Array.prototype.forEach.call(document.querySelectorAll(".card__title"), function (el) {
+    Array.prototype.forEach.call(document.querySelectorAll(".work__title"), function (el) {
       el.addEventListener("pointerenter", function () { scramble(el); });
     });
   }
